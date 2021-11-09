@@ -1,0 +1,49 @@
+
+body {
+background-color: #E8ECEF;
+}
+
+.btnSymbol {
+  background-color: transparent;
+  border: none;
+  color: black;
+  cursor: pointer;
+
+}
+.btnSymbol:hover{
+  color:red;
+}
+
+.center{
+  text-align:center;
+}
+
+.centered {
+    padding-top: 150px;
+    text-align: center;
+}
+
+
+.delete{
+  margin-right: 0px;
+}
+
+.secret-resume {
+  text-align: center;
+  padding-left: 5px;
+  padding-right: 5px;
+  font-size: 1rem;
+  margin-right: 3px;
+  margin-bottom: 3px;
+  color: #fff;
+  background-color: #bdb98d;
+}
+
+.item {
+  display: flex;
+}
+
+
+#sticky-footer {
+  flex-shrink: none;
+}

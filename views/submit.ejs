@@ -1,0 +1,28 @@
+<%- include('partials/header') %>
+
+<div class="container">
+  <div class="jumbotron centered">
+    <i class="fas fa-file fa-6x"></i>
+    <h1 class="display-3">Resume</h1>
+    <p class="secret-text">Please select your resume in pdf format!</p>
+
+    <div id="uploadfile" style="margin:auto" class="mainbox col-md-6 col-md-offset-3 col-sm-8 col-sm-offset-2">
+     
+              <form action="/submit" id="EmployeeForm" class="form-horizontal" method="post"  role="form" enctype="multipart/form-data">
+                 
+                      
+                  <div class="form-group">
+                          <input type="file" class="form-control" name="file" required>
+                     
+                      <!-- Button -->                                        
+                      <div style="margin-top: 10px;" class="col-md-offset-3 col-md-9">
+                      <input type="submit" name="submit" value="Upload" class="btn btn-primary">   
+                      </div>
+                  </div>
+                     
+              </form>
+          
+      </div>
+  </div>
+</div>
+<%- include('partials/footer') %>
