@@ -55,7 +55,6 @@ const userSchema = new mongoose.Schema({
 userSchema.plugin(passportLocalMongoose);
 userSchema.plugin(findOrCreate);
 
-
 const User = new mongoose.model("User", userSchema);
 
 passport.use(User.createStrategy());
@@ -70,7 +69,8 @@ passport.deserializeUser(function (id, done) {
   });
 });
 // "http://localhost:3000/auth/google/resumeshare" ||
-const callBackUrl ="https://resume-share.herokuapp.com/auth/google/resumeshare";
+const callBackUrl =
+  "https://resume-share.herokuapp.com/auth/google/resumeshare";
 passport.use(
   new GoogleStrategy(
     {
@@ -80,9 +80,12 @@ passport.use(
     },
     function (accessToken, refreshToken, profile, cb) {
       // console.log(profile.emails[0].value);
-      User.findOrCreate({ googleId: profile.id,emailId:profile.emails[0].value }, function (err, user) {
-        return cb(err, user);
-      });
+      User.findOrCreate(
+        { googleId: profile.id, emailId: profile.emails[0].value },
+        function (err, user) {
+          return cb(err, user);
+        }
+      );
     }
   )
 );
@@ -139,19 +142,21 @@ app.get("/submit", function (req, res) {
   }
 });
 
-app.get("/uploads/:resumeName",function(req,res){
+app.get("/uploads/:resumeName", function (req, res) {
   if (req.isAuthenticated()) {
     var requestedFile = req.params.resumeName;
-   //check that user has file or not
-    if(req.user.sharedresume.includes(requestedFile) || req.user.resumename.includes(requestedFile)){
-      res.sendFile(__dirname + '/views/uploads/'+requestedFile);
-    }else{
+    //check that user has file or not
+    if (
+      req.user.sharedresume.includes(requestedFile) ||
+      req.user.resumename.includes(requestedFile)
+    ) {
+      res.sendFile(__dirname + "/views/uploads/" + requestedFile);
+    } else {
       res.redirect("/secrets");
     }
-  }else{
+  } else {
     res.redirect("/login");
   }
-  
 });
 
 app.get("/logout", function (req, res) {
@@ -244,16 +249,15 @@ app.post("/delete", function (req, res) {
     } else {
       if (foundUser) {
         //delete file from folder
-        const pathToFile = "./views/uploads/"+resumename;
+        const pathToFile = "./views/uploads/" + resumename;
 
-        fs.unlink(pathToFile, function(err) {
+        fs.unlink(pathToFile, function (err) {
           if (err) {
-            throw err
+            throw err;
           } else {
-          console.log("Successfully deleted the file.")
-
+            console.log("Successfully deleted the file.");
           }
-        })
+        });
         //delter file name from datebase
         foundUser.resumename.splice(indexOfItem, 1);
         foundUser.save(function () {
@@ -268,22 +272,24 @@ app.post("/sharewith", function (req, res) {
   const resumename = req.body.resumename;
   const sharewithemail = req.body.sharewithemail;
   // console.log(indexOfItem," ",sharewithemail);
-  User.findOne({ 'emailId': sharewithemail }, 'sharedresume', function (err, user) {
-    if (err) { 
-      console.log(err)
-    }else{
-      if(user){
-        user.sharedresume.push(resumename);
-        user.save(function () {
-        
-          res.redirect("/secrets");
-        });
-      }else{
-        res.send("user not found");
+  User.findOne(
+    { emailId: sharewithemail },
+    "sharedresume",
+    function (err, user) {
+      if (err) {
+        console.log(err);
+      } else {
+        if (user) {
+          user.sharedresume.push(resumename);
+          user.save(function () {
+            res.redirect("/secrets");
+          });
+        } else {
+          res.send("user not found");
+        }
       }
-    };
-    
-  });
+    }
+  );
 });
 
 app.listen(process.env.PORT || 3000, function () {
