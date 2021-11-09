@@ -69,10 +69,8 @@ passport.deserializeUser(function (id, done) {
     done(err, user);
   });
 });
-
-const callBackUrl =
-  "http://localhost:3000/auth/google/resumeshare" ||
-  "https://resume-share.herokuapp.com/auth/google/resumeshare";
+// "http://localhost:3000/auth/google/resumeshare" ||
+const callBackUrl ="https://resume-share.herokuapp.com/auth/google/resumeshare";
 passport.use(
   new GoogleStrategy(
     {
